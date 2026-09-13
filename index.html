@@ -28,6 +28,11 @@
             -webkit-tap-highlight-color: transparent;
         }
 
+        html, body {
+            width: 100%;
+            overflow-x: hidden;
+        }
+
         body {
             background-color: var(--bg-color);
             color: var(--text-main);
@@ -36,6 +41,7 @@
             justify-content: center;
             align-items: flex-start;
             min-height: 100vh;
+            min-height: 100dvh;
         }
 
         .container {
@@ -60,41 +66,76 @@
         }
 
         .selectors-container {
-            display: grid;
-            grid-template-columns: 1.2fr repeat(6, 1fr);
-            gap: 6px;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 4px;
             margin-bottom: 20px;
+            overflow-x: auto;
+            background: #F8FAFC;
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 12px 8px;
         }
 
         .select-wrapper {
             display: flex;
             flex-direction: column;
             align-items: center;
+            gap: 5px;
+            flex: 0 0 auto;
+        }
+
+        .select-divider {
+            width: 1px;
+            height: 26px;
+            background: var(--border-color);
+            flex-shrink: 0;
         }
 
         .select-label {
-            font-size: 10px;
-            color: var(--text-muted);
-            margin-bottom: 4px;
-            font-weight: 500;
+            font-size: 12px;
+            font-weight: 700;
+            flex-shrink: 0;
+            white-space: nowrap;
+            letter-spacing: -0.2px;
         }
 
+        .label-group { color: #34495E; }
+        .label-c0 { color: var(--color-1); }
+        .label-c1 { color: var(--color-2); }
+        .label-c2 { color: var(--color-3); }
+        .label-c3 { color: var(--color-4); }
+        .label-c4 { color: var(--color-5); }
+        .label-c5 { color: #7F8C8D; }
+
         select {
-            width: 100%;
-            padding: 8px 4px;
+            width: 40px;
+            padding: 8px 2px;
             border: 1px solid var(--border-color);
-            border-radius: 8px;
+            border-radius: 999px;
             font-size: 13px;
+            font-weight: 600;
             text-align: center;
-            background-color: #FFF;
+            background-color: #FFFFFF;
+            color: var(--text-main);
             outline: none;
             cursor: pointer;
             appearance: none;
             -webkit-appearance: none;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            transition: box-shadow 0.15s ease, border-color 0.15s ease, transform 0.1s ease;
+        }
+
+        select:active {
+            transform: scale(0.96);
         }
 
         select:focus {
             border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.18);
         }
 
         .display-section {
@@ -135,6 +176,31 @@
         .ball-c3 { background-color: var(--color-4); }
         .ball-c4 { background-color: var(--color-5); }
         .ball-c5 { background-color: #7F8C8D; }
+
+        .btn-copy {
+            width: 100%;
+            padding: 13px;
+            background-color: #FFFFFF;
+            color: var(--primary-color);
+            border: 1.5px solid var(--primary-color);
+            border-radius: 14px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-bottom: 10px;
+            transition: background-color 0.2s, transform 0.1s, color 0.2s;
+        }
+
+        .btn-copy:active {
+            transform: scale(0.98);
+            background-color: #EAF2FC;
+        }
+
+        .btn-copy.copied {
+            background-color: var(--primary-color);
+            color: #FFFFFF;
+            border-color: var(--primary-color);
+        }
 
         .btn-generate {
             width: 100%;
@@ -188,16 +254,76 @@
             font-weight: bold;
             color: #34495E;
         }
+
+        @media (max-width: 400px) {
+            body {
+                padding: 10px;
+            }
+            .container {
+                padding: 16px 10px;
+                border-radius: 18px;
+            }
+            .balls-row,
+            .history-item {
+                gap: 4px;
+            }
+            .selectors-container {
+                gap: 3px;
+                padding: 10px 6px;
+            }
+            .select-label {
+                font-size: 11px;
+            }
+            select {
+                width: 34px;
+                padding: 7px 2px;
+                font-size: 12px;
+            }
+            .ball {
+                font-size: 15px;
+                max-width: 38px;
+            }
+            .group-ball {
+                font-size: 12px;
+            }
+            .hist-ball {
+                font-size: 11px;
+            }
+            .hist-group {
+                font-size: 10px;
+            }
+            .btn-generate {
+                padding: 14px;
+                font-size: 15px;
+            }
+        }
+
+        @media (max-width: 340px) {
+            .select-label {
+                font-size: 10px;
+            }
+            select {
+                width: 30px;
+                padding: 6px 1px;
+                font-size: 11px;
+            }
+            .ball {
+                font-size: 13px;
+                max-width: 32px;
+            }
+            .group-ball {
+                font-size: 10px;
+            }
+        }
     </style>
 </head>
 <body>
 
 <div class="container">
     <div class="setting-section">
-        <div class="setting-title">각 자리별 숫자 설정 (지정 시 고정)</div>
         <div class="selectors-container">
             <div class="select-wrapper">
-                <span class="select-label">조</span>
+                <span class="select-label label-group">조</span>
                 <select id="set-group">
                     <option value="R">랜덤</option>
                     <option value="1">1조</option>
@@ -207,12 +333,13 @@
                     <option value="5">5조</option>
                 </select>
             </div>
-            <div class="select-wrapper"><span class="select-label">십만</span><select class="set-num" data-idx="0"><option value="R">랜덤</option></select></div>
-            <div class="select-wrapper"><span class="select-label">만</span><select class="set-num" data-idx="1"><option value="R">랜덤</option></select></div>
-            <div class="select-wrapper"><span class="select-label">천</span><select class="set-num" data-idx="2"><option value="R">랜덤</option></select></div>
-            <div class="select-wrapper"><span class="select-label">백</span><select class="set-num" data-idx="3"><option value="R">랜덤</option></select></div>
-            <div class="select-wrapper"><span class="select-label">십</span><select class="set-num" data-idx="4"><option value="R">랜덤</option></select></div>
-            <div class="select-wrapper"><span class="select-label">일</span><select class="set-num" data-idx="5"><option value="R">랜덤</option></select></div>
+            <div class="select-divider"></div>
+            <div class="select-wrapper"><span class="select-label label-c0">십만</span><select class="set-num" data-idx="0"><option value="R">랜덤</option></select></div>
+            <div class="select-wrapper"><span class="select-label label-c1">만</span><select class="set-num" data-idx="1"><option value="R">랜덤</option></select></div>
+            <div class="select-wrapper"><span class="select-label label-c2">천</span><select class="set-num" data-idx="2"><option value="R">랜덤</option></select></div>
+            <div class="select-wrapper"><span class="select-label label-c3">백</span><select class="set-num" data-idx="3"><option value="R">랜덤</option></select></div>
+            <div class="select-wrapper"><span class="select-label label-c4">십</span><select class="set-num" data-idx="4"><option value="R">랜덤</option></select></div>
+            <div class="select-wrapper"><span class="select-label label-c5">일</span><select class="set-num" data-idx="5"><option value="R">랜덤</option></select></div>
         </div>
     </div>
 
@@ -228,10 +355,11 @@
         </div>
     </div>
 
+    <button class="btn-copy" id="btn-copy" onclick="copyNumbers()">번호 복사하기</button>
     <button class="btn-generate" onclick="generateNumbers()">번호 생성하기</button>
 
     <div class="history-section">
-        <div class="setting-title">최근 생성 이력 (최대 5개)</div>
+        <div class="setting-title">최근 생성 이력 (최대 15개)</div>
         <div class="history-list" id="history-list"></div>
     </div>
 </div>
@@ -277,9 +405,58 @@
         addHistory(finalGroup, finalNums);
     }
 
+    function copyNumbers() {
+        const nums = [];
+        for (let i = 0; i < 6; i++) {
+            nums.push(document.getElementById(`res-n${i}`).textContent);
+        }
+
+        if (nums.includes('-')) {
+            alert('먼저 번호를 생성해주세요.');
+            return;
+        }
+
+        const text = nums.join('');
+        const btn = document.getElementById('btn-copy');
+
+        const showCopied = () => {
+            const originalText = '번호 복사하기';
+            btn.textContent = '복사되었습니다!';
+            btn.classList.add('copied');
+            setTimeout(() => {
+                btn.textContent = originalText;
+                btn.classList.remove('copied');
+            }, 1500);
+        };
+
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(text).then(showCopied).catch(() => {
+                fallbackCopy(text);
+                showCopied();
+            });
+        } else {
+            fallbackCopy(text);
+            showCopied();
+        }
+    }
+
+    function fallbackCopy(text) {
+        const textarea = document.createElement('textarea');
+        textarea.value = text;
+        textarea.style.position = 'fixed';
+        textarea.style.opacity = '0';
+        document.body.appendChild(textarea);
+        textarea.focus();
+        textarea.select();
+        try {
+            document.execCommand('copy');
+        } catch (e) {}
+        document.body.removeChild(textarea);
+    }
+
     function addHistory(group, nums) {
         historyData.unshift({group, nums});
-        if(historyData.length > 5) historyData.pop();
+        if(historyData.length > 15) historyData.pop();
 
         const listEl = document.getElementById('history-list');
         listEl.innerHTML = '';
